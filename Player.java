@@ -1,4 +1,5 @@
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
@@ -13,28 +14,28 @@ public class Player {
 
     // initialization
     public Player() {
-        Scanner scanner = new Scanner(System.in);
+        SecureMethods secure = new SecureMethods();
         int p_health;
 
         System.out.println("Initializing player...");
 
         System.out.print("Enter the initial x-coordinate of the player: ");
-        x = scanner.nextInt();
+        x = secure.secureInt(0, 50);
 
         System.out.print("Enter the initial y-coordinate of the player: ");
-        y = scanner.nextInt();
+        x = secure.secureInt(0, 50);
 
         System.out.print("Enter the initial health of the player: ");
-        p_health = scanner.nextInt();
+        p_health = secure.secureInt(0, 50);
         health = new Health();
         health.changeHealthValue(p_health);
         health.changeMaxHealthValue(p_health);
 
         System.out.print("Enter the speed of the player: ");
-        speed = scanner.nextInt();
+        speed = secure.secureInt(0, 4);
 
         System.out.print("Enter the damage of the player: ");
-        damage = scanner.nextInt();
+        damage = secure.secureInt(0, 10);
 
         inventory = new Inventory();
         potions_count = 0; // Default initialization

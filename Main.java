@@ -5,17 +5,17 @@ public class Main {
         // Инициализируем объекты класса
         Player player = new Player();
         Inventory inventory = player.getInventory();
-
-        Scanner scan = new Scanner(System.in);
+        // preventing from wrong input
+        SecureMethods secure = new SecureMethods();
 
         System.out.print("How many monsters do you want: ");
-        int monstersCount = scan.nextInt();
+        int monstersCount = secure.secureInt(0, 10);
 
         System.out.print("How many items do you want: ");
-        int itemsCount = scan.nextInt();
+        int itemsCount = secure.secureInt(0, 10);
 
         System.out.print("How many potions do you want: ");
-        int potionCount = scan.nextInt();
+        int potionCount = secure.secureInt(0, 10);
 
         // Инициализировали монстров, переместили их в рандомные места
         Monsters[] monsters = new Monsters[monstersCount];

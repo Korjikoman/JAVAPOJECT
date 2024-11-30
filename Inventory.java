@@ -7,11 +7,12 @@ public class Inventory {
     private Item[] inventoryItems;
 
     public Inventory() {
+        SecureMethods secure = new SecureMethods();
+
         System.out.println("Initializing Inventory...");
 
-        Scanner scan = new Scanner(System.in);
         System.out.print("Enter the inventory space: ");
-        space = scan.nextInt();
+        space = secure.secureInt(1, 10);
 
         if (space <= 0) {
             System.err.println("Invalid inventory size! Setting space to 1.");
