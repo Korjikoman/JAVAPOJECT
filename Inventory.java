@@ -1,34 +1,25 @@
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class Inventory {
-    private int space;
+public class Inventory { // класс для представления инвентаря игрока
+    private static int space = 10;
     private int itemsCount;
     private int currentElement;
-    private Item[] inventoryItems;
+    private ArrayList<Item> inventoryItems;
 
     public Inventory() {
-        SecureMethods secure = new SecureMethods();
-
         System.out.println("Initializing Inventory...");
 
-        System.out.print("Enter the inventory space: ");
-        space = secure.secureInt(1, 10);
-
-        if (space <= 0) {
-            System.err.println("Invalid inventory size! Setting space to 1.");
-            space = 1;
-        }
-        inventoryItems = new Item[space];
+        inventoryItems = new ArrayList<>(space);
 
         itemsCount = 0;
         currentElement = 0;
     }
 
-    public int getSpace() {
+    public static int getSpace() {
         return space;
     }
 
-    public void changeSpace(int newSpace) {
+    public static void changeSpace(int newSpace) {
         space = newSpace;
     }
 
@@ -43,10 +34,11 @@ public class Inventory {
     public void printInventory() {
         System.out.printf("Inventory space: %d\n", space);
         System.out.println("Your inventory:");
-        if (itemsCount == 0)
+        if (itemsCount == 0) {
             System.out.println("There's nothing in it");
+        }
         for (int i = 0; i < itemsCount; i++) {
-            System.out.println("  Item " + (i + 1) + ": " + inventoryItems[i].getName());
+            System.out.println("  Item " + (i + 1) + ": " + inventoryItems.get(i).getName());
         }
         System.out.println("Inventory current element: " + currentElement);
     }
@@ -54,19 +46,19 @@ public class Inventory {
     public int inventoryAddItem(Item item) {
         if (itemsCount >= space) {
             System.out.printf("Inventory is full! Cannot add item '%s'.\n", item.getName());
-            return 0; // Failed to add item
+            return 0; // Не удалось добавить предмет
         }
 
-        // Add item to the array
-        inventoryItems[itemsCount] = item;
+        // Добавление предмета в массив строк
+        inventoryItems.add(item);
         itemsCount++;
 
-        item.collected(); // Mark the item as collected
+        item.isCollected(); // Помечаем предмет как собранный
         System.out.println("Item " + item.getName() + " added to inventory.");
         return 0;
     }
 
     public int getItem(int idx) {
-        return inventoryItems[idx].getDamage();
+        return inventoryItems.get(idx).getDamage();
     }
 }

@@ -3,43 +3,75 @@ import java.util.Scanner;
 // ------------------- GAMEPLAY FUNCTIONS --------------------------
 public class GameplayFunctions {
 
-    public void battleWithMonster(Player player, Monsters monster, Inventory inventory) {
+    // This code is part of a game battle system using Java.
+
+    public static void damagePlayer(Player player, int damage) {
+        if (!player.isAlive()) {
+            System.out.println("Monster is dead and cannot attack.");
+            return;
+        }
+
+        player.changeHealthValue(player.getCurrentHealth() - damage);
+        if (player.getCurrentHealth() <= 0) {
+            player.isDead();
+            System.out.println("Player is dead");
+        }
+    }
+
+    public static void damageMonster(Monsters monster, int damage) {
+        monster.changeHealthValue(monster.getHealth() - damage);
+        if (monster.getHealth() <= 0) {
+            monster.changeHealthValue(0);
+            monster.is_dead();
+            System.out.println("Monster defeated!");
+        }
+    }
+
+    // Function that implements the mechanics of fighting a monster
+    public static void battleWithMonster(Player player, Monsters monster) {
         if (!monster.isAlive()) {
             System.out.println("The monster is already dead.");
             return;
         }
 
-        monster.damagePlayer(player, monster.getDamage());
+        // Monster attacks first
+        damagePlayer(player, monster.getDamage());
         System.out.printf("You are attacked by a monster! Your health: %d\n", player.getCurrentHealth());
 
+        // Check if the player is already dead
         if (player.getCurrentHealth() <= 0) {
             System.out.println("You were killed by the monster! Game over.\n");
-            player.is_dead();
+            player.isDead();
             return;
         }
 
         int playerDamage = 0;
-        if (inventory.getItemsCount() > 0) {
-            System.out.printf("Choose a weapon from your inventory (enter slot number 1-%d): \n",
-                    inventory.getItemsCount());
-            Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        if (player.getItemsCount() > 0) {
+            // Player chooses a weapon from the inventory
+            System.out.println(
+                    "Choose a weapon from your inventory (enter slot number 1 to " + player.getItemsCount() + "): ");
             int choice = scanner.nextInt();
 
-            if (choice < 1 || choice > inventory.getItemsCount()) {
+            // Check the validity of the choice
+            if (choice < 1 || choice > player.getItemsCount()) {
                 System.out.println("Invalid choice. You lose your chance to attack!\n");
                 return;
             }
 
-            playerDamage = inventory.getItem(choice - 1);
-            System.out.printf("You've chosen a weapon with damage: %d\n", playerDamage);
+            // Get the damage of the chosen weapon
+            playerDamage = player.getItem(choice - 1);
+            System.out.println("You've chosen a weapon with damage: " + playerDamage);
         } else {
             System.out.println("You don't have any items");
             playerDamage = player.getDamage();
         }
 
+        // Battle
         while (monster.isAlive() && player.isAlive()) {
-            player.damageMonster(monster, playerDamage);
-            System.out.printf("You attacked the monster! Monster's health: %d\n", monster.getHealth());
+            // Player attacks the monster
+            damageMonster(monster, playerDamage);
+            System.out.println("You attacked the monster! Monster's health: " + monster.getHealth());
 
             if (!monster.isAlive()) {
                 monster.changeX(-1);
@@ -47,18 +79,20 @@ public class GameplayFunctions {
                 break;
             }
 
-            monster.damagePlayer(player, monster.getDamage());
-            System.out.printf("The monster fought back! Your health: %d\n", player.getCurrentHealth());
+            // Monster attacks the player
+            damagePlayer(player, monster.getDamage());
+            System.out.println("The monster fought back! Your health: " + player.getCurrentHealth());
 
             if (player.getCurrentHealth() <= 0) {
-                player.is_dead();
+                player.isDead();
                 break;
             }
         }
 
+        // Battle result
         if (!monster.isAlive() && player.isAlive()) {
             System.out.println("You killed the monster! You earned 5 coins!\n");
-            player.add_coins(5);
+            player.addCoins(5);
         } else if (!player.isAlive()) {
             System.out.println("You were killed by the monster! Game over.\n");
         } else {
@@ -67,12 +101,12 @@ public class GameplayFunctions {
         System.out.println("\n");
     }
 
-    public void usePotion(Player player, Potion potion) {
+    // Use potion to restore health
+    public static void usePotion(Player player, Potion potion) {
         if (potion.isCollected() || potion.getHealthRestore() <= 0)
             return;
 
-        System.out.printf("Player found a potion! Restoring %d health.\n", potion.getHealthRestore());
-
+        System.out.println("Player found a potion! Restoring " + potion.getHealthRestore() + " health.");
         player.changeHealthValue(player.getCurrentHealth() + potion.getHealthRestore());
         if (player.getCurrentHealth() > player.getMaxHealth()) {
             player.changeHealthValue(player.getMaxHealth());
@@ -80,59 +114,39 @@ public class GameplayFunctions {
         potion.collect();
     }
 
-    public void checkCollisions(Player player, Monsters[] monsters, Potion[] potions,
-            Coin coin, Inventory inventory, Item[] items) {
-        for (Monsters monster : monsters) {
-            if (player.getX() == monster.getX() && player.getY() == monster.getY()) {
-                System.out.println("Player encountered a monster!");
-                battleWithMonster(player, monster, inventory);
-            }
+    public static void changeSettings() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("GAME SETTINGS");
+        System.out.println("Select which setting you would like to change:");
+        System.out.println("1) Player's maximum health");
+        System.out.println("2) Maximum inventory space");
+        System.out.println("3) Amount of health restored by potions");
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter new health value: ");
+                int health = scanner.nextInt();
+                Health.setMaxHealth(health);
+                System.out.println("The player's new max health value is: " + Health.getMaxHealth() + "\n");
+                break;
+
+            case 2:
+                System.out.print("Enter new max inventory space: ");
+                int space = scanner.nextInt();
+                Inventory.changeSpace(space);
+                System.out.println("The new max inventory space value is: " + Inventory.getSpace() + "\n");
+                break;
+
+            case 3:
+                System.out.print("Enter new restored health value: ");
+                int restore = scanner.nextInt();
+                Potion.setHealthRestore(restore);
+                System.out.println("The new value of the player's maximum health: " + Potion.getHealthRestore() + "\n");
+                break;
+
+            default:
+                break;
         }
-
-        for (Potion potion : potions) {
-            if (player.getX() == potion.getX() && player.getY() == potion.getY()) {
-                System.out.println("Player found a potion!");
-                player.heal(potion.getHealthRestore());
-            }
-        }
-
-        if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
-            System.out.println("Player found a coin!");
-            player.add_coins(coin.getValue());
-        }
-
-        for (Item item : items) {
-            if (player.getX() == item.getX() && player.getY() == item.getY()) {
-                System.out.printf("Player found a %s!\n", item.getName());
-                inventory.inventoryAddItem(item);
-            }
-        }
-    }
-
-    public void showInitializedClasses(Player player, Inventory inventory, Monsters[] monsters,
-            Item[] items, Potion[] potions, Coin coin) {
-        System.out.println("------------------Player:");
-        player.printPlayer();
-
-        System.out.println("------------------Player's inventory:");
-        inventory.printInventory();
-
-        System.out.println("------------------Monsters:");
-        for (Monsters monster : monsters) {
-            monster.printMonster();
-        }
-
-        System.out.println("------------------Items:");
-        for (Item item : items) {
-            item.printItem();
-        }
-
-        System.out.println("------------------Potions:");
-        for (Potion potion : potions) {
-            potion.printPotion();
-        }
-
-        System.out.println("------------------Coin:");
-        coin.printCoin();
     }
 }

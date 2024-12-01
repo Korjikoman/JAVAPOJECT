@@ -1,27 +1,22 @@
-public class Health {
+
+public class Health { // Class for representing player health
     private int currentHealth;
-    private int maxHealth;
+    private static int maxHealth = 10;
 
     public Health() {
-        this.currentHealth = 0;
-        this.maxHealth = 0;
+        currentHealth = maxHealth;
     }
 
-    public Health(int max) {
-        this.currentHealth = max;
-        this.maxHealth = max;
+    public static void setMaxHealth(int newSize) {
+        maxHealth = newSize;
     }
 
     public int getCurrentHealth() {
         return currentHealth;
     }
 
-    public int getMaxHealth() {
+    public static int getMaxHealth() {
         return maxHealth;
-    }
-
-    public void changeMaxHealthValue(int value) {
-        maxHealth = value;
     }
 
     public void heal(int healPoints) {
@@ -31,7 +26,7 @@ public class Health {
         }
     }
 
-    public void changeHealthValue(int newValue) {
+    public void changeHealthValue(int newValue) { // Change the current health value
         currentHealth = newValue;
     }
 }
