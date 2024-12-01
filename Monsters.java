@@ -3,7 +3,7 @@ import java.util.Random;
 public class Monsters { // класс для представления монстров
     private int x, y;
     private int damage;
-    private Health health;
+    private Health health = new Health();
     private boolean is_alive;
 
     public Monsters() {
