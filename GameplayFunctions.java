@@ -27,7 +27,7 @@ public class GameplayFunctions {
         }
     }
 
-    public static void battleWithMonster(Player player, Monsters monster) {
+    public void battleWithMonster(Player player, Monsters monster) {
         if (!monster.isAlive()) {
             System.out.println("The monster is already dead.");
             return;
@@ -37,7 +37,7 @@ public class GameplayFunctions {
         damagePlayer(player, monster.getDamage());
         System.out.printf("You are attacked by a monster! Your health: %d\n", player.getCurrentHealth());
 
-        // Check if player is already dead
+        // Check if the player is already dead
         if (player.getCurrentHealth() <= 0) {
             System.out.println("You were killed by the monster! Game over.\n");
             player.isDead();
@@ -46,7 +46,7 @@ public class GameplayFunctions {
 
         int playerDamage = 0;
         if (player.getItemsCount() > 0) {
-            // Player chooses weapon from inventory
+            // Player chooses a weapon from the inventory
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter the name of the item: ");
             String itemName = scanner.nextLine();
@@ -68,7 +68,7 @@ public class GameplayFunctions {
 
         // Battle
         while (monster.isAlive() && player.isAlive()) {
-            // Player attacks monster
+            // Player attacks the monster
             damageMonster(monster, playerDamage);
             System.out.printf("You attacked the monster! Monster's health: %d\n", monster.getHealth());
 
@@ -78,7 +78,7 @@ public class GameplayFunctions {
                 break;
             }
 
-            // Monster attacks player
+            // Monster attacks the player
             damagePlayer(player, monster.getDamage());
             System.out.printf("The monster fought back! Your health: %d\n", player.getCurrentHealth());
 
