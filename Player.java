@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player { // класс для представления игрока
@@ -37,10 +38,11 @@ public class Player { // класс для представления игрок
     }
 
     // перемещаем игрока
-    public void movePlayer(int dx, int dy) {
-        x = dx * speed;
-        y = dy * speed;
+    public Player movePlayer(int x, int y) {
+        this.x = x * speed;
+        this.y = y * speed;
         System.out.printf("Player moved to (%d, %d)\n", x, y);
+        return this;
     }
 
     // проверяем, умер ли игрок
@@ -113,7 +115,15 @@ public class Player { // класс для представления игрок
         return inventory.getItemsCount();
     }
 
-    public int getItem(int idx) {
-        return inventory.getItem(idx);
+    public Item getItem(String itemName) {
+        ArrayList<Item> items = inventory.getInventoryItems();
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(
+                    "Item " + (i + 1) + ": " + items.get(i).getName() + ", Damage: " + items.get(i).getDamage());
+            if (items.get(i).getName().contains(itemName))
+                return items.get(i);
+        }
+
+        return null;
     }
 }

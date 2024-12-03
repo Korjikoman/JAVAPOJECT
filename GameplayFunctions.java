@@ -27,7 +27,6 @@ public class GameplayFunctions {
         }
     }
 
-    // Function that implements the mechanics of fighting a monster
     public static void battleWithMonster(Player player, Monsters monster) {
         if (!monster.isAlive()) {
             System.out.println("The monster is already dead.");
@@ -38,7 +37,7 @@ public class GameplayFunctions {
         damagePlayer(player, monster.getDamage());
         System.out.printf("You are attacked by a monster! Your health: %d\n", player.getCurrentHealth());
 
-        // Check if the player is already dead
+        // Check if player is already dead
         if (player.getCurrentHealth() <= 0) {
             System.out.println("You were killed by the monster! Game over.\n");
             player.isDead();
@@ -46,22 +45,22 @@ public class GameplayFunctions {
         }
 
         int playerDamage = 0;
-        Scanner scanner = new Scanner(System.in);
         if (player.getItemsCount() > 0) {
-            // Player chooses a weapon from the inventory
-            System.out.println(
-                    "Choose a weapon from your inventory (enter slot number 1 to " + player.getItemsCount() + "): ");
-            int choice = scanner.nextInt();
+            // Player chooses weapon from inventory
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter the name of the item: ");
+            String itemName = scanner.nextLine();
 
-            // Check the validity of the choice
-            if (choice < 1 || choice > player.getItemsCount()) {
-                System.out.println("Invalid choice. You lose your chance to attack!\n");
-                return;
+            Item item = player.getItem(itemName);
+
+            if (item != null) {
+                playerDamage = item.getDamage();
+                System.out.printf("You've chosen a weapon %s with damage: %d\n", item.getName(), playerDamage);
+            } else {
+                System.out.println("Cannot find a weapon");
+                playerDamage = player.getDamage();
+                System.out.printf("Your damage: %d\n", playerDamage);
             }
-
-            // Get the damage of the chosen weapon
-            playerDamage = player.getItem(choice - 1);
-            System.out.println("You've chosen a weapon with damage: " + playerDamage);
         } else {
             System.out.println("You don't have any items");
             playerDamage = player.getDamage();
@@ -69,9 +68,9 @@ public class GameplayFunctions {
 
         // Battle
         while (monster.isAlive() && player.isAlive()) {
-            // Player attacks the monster
+            // Player attacks monster
             damageMonster(monster, playerDamage);
-            System.out.println("You attacked the monster! Monster's health: " + monster.getHealth());
+            System.out.printf("You attacked the monster! Monster's health: %d\n", monster.getHealth());
 
             if (!monster.isAlive()) {
                 monster.changeX(-1);
@@ -79,9 +78,9 @@ public class GameplayFunctions {
                 break;
             }
 
-            // Monster attacks the player
+            // Monster attacks player
             damagePlayer(player, monster.getDamage());
-            System.out.println("The monster fought back! Your health: " + player.getCurrentHealth());
+            System.out.printf("The monster fought back! Your health: %d\n", player.getCurrentHealth());
 
             if (player.getCurrentHealth() <= 0) {
                 player.isDead();

@@ -60,8 +60,9 @@ public class Map {
         return player.getCurrentHealth();
     }
 
-    public void movePlayer(int dx, int dy) {
+    public Map movePlayer(int dx, int dy) {
         player.movePlayer(dx, dy);
+        return this;
     }
 
     public void showInitializedClasses() {

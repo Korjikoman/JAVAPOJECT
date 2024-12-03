@@ -31,6 +31,10 @@ public class Inventory { // класс для представления инв�
         return itemsCount;
     }
 
+    public ArrayList<Item> getInventoryItems() {
+        return inventoryItems;
+    }
+
     public void printInventory() {
         System.out.printf("Inventory space: %d\n", space);
         System.out.println("Your inventory:");

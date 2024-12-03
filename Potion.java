@@ -7,9 +7,13 @@ class Potion { // класс для представления зелий вос
     private static final Random random = new Random();
 
     public Potion() {
-        this.x = 0;
-        this.y = 0;
-        this.collected = false;
+        this(0, 0, false);
+    }
+
+    public Potion(int x, int y, boolean collected) {
+        this.x = x;
+        this.y = y;
+        this.collected = collected;
     }
 
     public boolean isCollected() {

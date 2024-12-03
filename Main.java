@@ -25,7 +25,12 @@ public class Main {
                     System.out.print("Enter (x,y) to move the player: ");
                     int dx = scanner.nextInt();
                     int dy = scanner.nextInt();
-                    map.movePlayer(dx, dy);
+                    if (map.getPlayer().getSpeed() == 2) {
+                        map.movePlayer(dx, dy).movePlayer(dx, dy);
+                    } else {
+                        map.movePlayer(dx, dy);
+
+                    }
 
                     map.checkCollisions();
                     break;
@@ -34,7 +39,7 @@ public class Main {
                     map.showInitializedClasses();
                     break;
                 case 3:
-                    changeSettings();
+                    GameplayFunctions.changeSettings();
                     break;
                 case 4:
                     // Exit the game
@@ -50,7 +55,4 @@ public class Main {
         scanner.close();
     }
 
-    private static void changeSettings() {
-        // Implement the changeSettings method
-    }
 }
