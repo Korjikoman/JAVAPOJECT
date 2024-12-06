@@ -13,10 +13,10 @@ class Item { // class for representing a weapon
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the name of the item: ");
-        itemName = scanner.nextLine();
+        itemName = InputHandler.safeString(100);
 
-        System.out.print("Enter the damage of the item: ");
-        damage = scanner.nextInt();
+        System.out.print("Enter the damage of the item");
+        damage = InputHandler.safeInt(1, 20);
 
         collected = false; // By default, the item is not collected
         x = 0;

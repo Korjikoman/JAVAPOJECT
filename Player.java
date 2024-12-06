@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Player { // класс для представления игрока
 
@@ -15,20 +16,19 @@ public class Player { // класс для представления игрок
 
     // инициализация
     public Player() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Initializing player...");
 
         System.out.println("Coordinates of a player: (" + x + "; " + y + ")");
 
-        System.out.print("Enter the initial health of the player: ");
-        int pHealth = scanner.nextInt();
+        System.out.print("Enter the initial health of the player");
+        int pHealth = InputHandler.safeInt(1, 10);
         health.changeHealthValue(pHealth);
 
-        System.out.print("Enter the speed of the player: ");
-        speed = scanner.nextInt();
+        System.out.print("Enter the speed of the player");
+        speed = InputHandler.safeInt(1, 2);
 
-        System.out.print("Enter the damage of the player: ");
-        damage = scanner.nextInt();
+        System.out.print("Enter the damage of the player");
+        damage = InputHandler.safeInt(1, 2);
 
         potionsCount = 0; // Инициализация по умолчанию
         isAlive = true; // Игрок жив при создании
@@ -116,14 +116,16 @@ public class Player { // класс для представления игрок
     }
 
     public Item getItem(String itemName) {
-        ArrayList<Item> items = inventory.getInventoryItems();
-        for (int i = 0; i < items.size(); i++) {
-            System.out.println(
-                    "Item " + (i + 1) + ": " + items.get(i).getName() + ", Damage: " + items.get(i).getDamage());
-            if (items.get(i).getName().contains(itemName))
-                return items.get(i);
+        Item[][] items = inventory.getInventoryItems();
+        for (int i = 0; i < Inventory.getSpace(); i++) {
+            for (int j = 0; j < Inventory.getSpace(); j++) {
+                System.out.println("Item [" + (i + 1) + ";" + (j + 1) + "]" + items[i][j].getName() + ", Damage: "
+                        + items[i][j].getDamage());
+                if (items[i][j].getName().contains(itemName))
+                    return items[i][j];
+            }
         }
-
         return null;
     }
+
 }

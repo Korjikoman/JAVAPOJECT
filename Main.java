@@ -7,7 +7,6 @@ public class Main {
 
         // Game loop
         boolean gameRunning = true;
-        Scanner scanner = new Scanner(System.in);
 
         while (gameRunning && map.getPlayerHealth() > 0) {
             System.out.println("\n\n");
@@ -18,13 +17,13 @@ public class Main {
             System.out.println("4. Exit game");
             System.out.print("Enter your choice: ");
 
-            int choice = scanner.nextInt();
+            int choice = InputHandler.safeInt(1, 4);
 
             switch (choice) {
                 case 1: // Move the player to specified coordinates
-                    System.out.print("Enter (x,y) to move the player: ");
-                    int dx = scanner.nextInt();
-                    int dy = scanner.nextInt();
+                    System.out.print("Enter (x,y) to move the player");
+                    int dx = InputHandler.safeInt(-100, 100);
+                    int dy = InputHandler.safeInt(-100, 100);
                     if (map.getPlayer().getSpeed() == 2) {
                         map.movePlayer(dx, dy).movePlayer(dx, dy);
                     } else {
@@ -52,7 +51,6 @@ public class Main {
             }
         }
 
-        scanner.close();
     }
 
 }

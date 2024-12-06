@@ -27,7 +27,7 @@ public class GameplayFunctions {
         }
     }
 
-    public void battleWithMonster(Player player, Monsters monster) {
+    public static void battleWithMonster(Player player, Monsters monster) {
         if (!monster.isAlive()) {
             System.out.println("The monster is already dead.");
             return;

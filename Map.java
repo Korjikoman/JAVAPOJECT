@@ -24,15 +24,14 @@ public class Map {
     private int coin_index;
 
     public Map() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("How many monsters do you want: ");
-        monsters_count = scanner.nextInt();
+        System.out.print("How many monsters do you want");
+        monsters_count = InputHandler.safeInt(1, 10);
 
-        System.out.print("How many items do you want: ");
-        items_count = scanner.nextInt();
+        System.out.print("How many items do you want");
+        items_count = InputHandler.safeInt(1, 10);
 
-        System.out.print("How many potions do you want: ");
-        potions_count = scanner.nextInt();
+        System.out.print("How many potions do you want");
+        potions_count = InputHandler.safeInt(1, 10);
 
         // Initializing objects, add it to the map
         monsters = new Monsters[monsters_count];
