@@ -13,6 +13,7 @@ public class Map {
     private Inventory inventory;
     private int monsters_count;
     private int monster_index;
+    private GameplayFunctions gameplay = new GameplayFunctions();
 
     private int items_count;
     private int item_index;
@@ -97,7 +98,7 @@ public class Map {
         for (int i = 0; i < monsters_count; i++) {
             if (player.getX() == monsters[i].getX() && player.getY() == monsters[i].getY()) {
                 System.out.println("Player encountered a monster!");
-                GameplayFunctions.battleWithMonster(player, monsters[i]);
+                gameplay.battleWithMonster(player, monsters[i]);
             }
         }
 
@@ -113,7 +114,7 @@ public class Map {
         for (int i = 0; i < coins_count; i++) {
             if (player.getX() == coins[i].getX() && player.getY() == coins[i].getY()) {
                 System.out.println("Player found a coin!");
-                player.addCoins(5);
+                player.add_coins(5);
             }
         }
 
@@ -127,26 +128,24 @@ public class Map {
     }
 
     public void moveObjectsRandomly() {
-        Random rand = new Random();
-
         for (int i = 0; i < monsters_count; i++) {
-            this.monsters[i].changeX(rand.nextInt(50));
-            this.monsters[i].changeY(rand.nextInt(50));
+            monsters[i].setX((int) (Math.random() * 50));
+            monsters[i].setY((int) (Math.random() * 50));
         }
 
         for (int i = 0; i < items_count; i++) {
-            items[i].changeX(rand.nextInt(50));
-            items[i].changeY(rand.nextInt(50));
+            items[i].changeX((int) (Math.random() * 50));
+            items[i].changeY((int) (Math.random() * 50));
         }
 
-        for (int i = 0; i < potions_count; i++) {
-            potions[i].changeX(rand.nextInt(50));
-            potions[i].changeY(rand.nextInt(50));
+        for (int i = 0; i < monsters_count; i++) {
+            potions[i].changeX((int) (Math.random() * 50));
+            potions[i].changeY((int) (Math.random() * 50));
         }
 
         for (int i = 0; i < coins_count; i++) {
-            coins[i].changeX(rand.nextInt(50));
-            coins[i].changeY(rand.nextInt(50));
+            coins[i].changeX((int) (Math.random() * 50));
+            coins[i].changeY((int) (Math.random() * 50));
         }
     }
 

@@ -36,8 +36,8 @@ class Coin {
     public void collectCoin(Player player, int value) {
         if (!collected) {
             collected = true;
-            player.addCoins(value);
-            System.out.printf("Coin collected! Total coins: %d%n", player.getCoins());
+            player.add_coins(value);
+            System.out.printf("Coin collected! Total coins: %d%n", player.get_coins());
         }
     }
 

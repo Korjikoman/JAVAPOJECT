@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,6 +12,34 @@ class InvalidInputException extends RuntimeException {
 
 public class InputHandler {
     private static final Scanner scanner = new Scanner(System.in);
+
+    public static int[] safeMultipleInt() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            String lines = br.readLine();
+
+            // Разделяем строку по пробелам
+            String[] strs = lines.trim().split("\\s+");
+
+            // Преобразуем строковый массив в числовой
+            int[] numbers = new int[strs.length];
+            for (int i = 0; i < strs.length; i++) {
+                try {
+                    numbers[i] = Integer.parseInt(strs[i]);
+                } catch (NumberFormatException e) {
+                    System.out.println("Input error: " + strs[i] + " is not an integer.");
+                    return new int[0]; // Возвращаем пустой массив при ошибке
+                }
+            }
+            return numbers;
+
+        } catch (IOException e) {
+            System.out.println("Reading error.");
+            return new int[0]; // Возвращаем пустой массив в случае ошибки чтения
+        }
+
+    }
 
     public static int safeInt(int min, int max) {
         int input;
