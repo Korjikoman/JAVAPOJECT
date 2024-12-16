@@ -7,6 +7,7 @@ public class Player extends Object {
     private int coins;
 
     public Player() {
+        super();
         System.out.println("Initializing player...");
         System.out.println("Player's name (<= 100 characters): ");
         Scanner scanner = new Scanner(System.in);
@@ -28,6 +29,12 @@ public class Player extends Object {
         potions_count = 0;
         coins = 0;
 
+        System.out.println("Player " + name + " initialized successfully!");
+    }
+
+    public Player(String name, int x, int y, int health, int speed, int damage) {
+        super(x, y, health, damage);
+        System.out.println("Initializing player...");
         System.out.println("Player " + name + " initialized successfully!");
     }
 
