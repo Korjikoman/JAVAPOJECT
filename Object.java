@@ -1,15 +1,12 @@
-import java.util.Random;
-
-class Object { // класс для представления объектов. Является родительским к классам Player and
-               // Monster
+public class Object {
     private int x, y;
     private int health;
-    private static int maxHealth = 10;
+    private static int maxHealth;
 
     private int damage;
     private boolean is_alive;
 
-    protected String name; // Имя объекта
+    protected String name;
 
     public Object() {
         this.x = 0;
@@ -45,6 +42,23 @@ class Object { // класс для представления объектов.
         is_alive = false;
     }
 
+    public void changeHealthValue(int new_value) {
+        health = new_value;
+    }
+
+    public int getCurrentHealth() {
+        return health;
+    }
+
+    public static int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void heal(int value) {
+        health += value;
+        System.out.println("Object's health restored");
+    }
+
     public int getX() {
         return x;
     }
@@ -67,22 +81,5 @@ class Object { // класс для представления объектов.
 
     public void setDamage(int value) {
         damage = value;
-    }
-
-    public int getCurrentHealth() {
-        return health;
-    }
-
-    public void changeHealthValue(int new_value) {
-        health = new_value;
-    }
-
-    public static int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public void heal(int value) {
-        health += value;
-        System.out.println("Object's health restored");
     }
 }

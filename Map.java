@@ -138,7 +138,7 @@ public class Map {
             items[i].changeY((int) (Math.random() * 50));
         }
 
-        for (int i = 0; i < monsters_count; i++) {
+        for (int i = 0; i < potions_count; i++) {
             potions[i].changeX((int) (Math.random() * 50));
             potions[i].changeY((int) (Math.random() * 50));
         }
