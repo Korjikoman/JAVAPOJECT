@@ -99,19 +99,6 @@ public class GameplayFunctions {
         System.out.println("\n");
     }
 
-    // Use potion to restore health
-    public static void usePotion(Player player, Potion potion) {
-        if (potion.isCollected() || potion.getHealthRestore() <= 0)
-            return;
-
-        System.out.println("Player found a potion! Restoring " + potion.getHealthRestore() + " health.");
-        player.changeHealthValue(player.getCurrentHealth() + potion.getHealthRestore());
-        if (player.getCurrentHealth() > player.getMaxHealth()) {
-            player.changeHealthValue(player.getMaxHealth());
-        }
-        potion.collect();
-    }
-
     void changeSettings() {
         int choice;
         System.out.println("GAME SETTINGS");
@@ -121,6 +108,8 @@ public class GameplayFunctions {
         System.out.println("3) Amount of health restored by potions");
         choice = Integer.parseInt(System.console().readLine());
         switch (choice) {
+
+            // ПОМЕНЯТЬ ЛОГИКУ 1го кейса
             case 1:
                 int health;
                 System.out.println("Enter new health value:");

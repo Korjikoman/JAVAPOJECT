@@ -1,7 +1,7 @@
 public class Object {
     private int x, y;
     private int health;
-    private static int maxHealth;
+    private static int maxHealth = 10;
 
     private int damage;
     private boolean is_alive;

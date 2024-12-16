@@ -62,8 +62,9 @@ public class Player extends Object {
         System.out.printf("Player Position: (%d, %d)\n", getX(), getY());
         System.out.printf("Health: %d/%d\n", getCurrentHealth(), getMaxHealth());
         System.out.printf("Speed: %d\n", speed);
-        System.out.printf("Player inventory space: %d, items count: %d\n", inventory.getSpace(),
+        System.out.printf("Player inventory space: %d, items count: %d\n", Inventory.getSpace(),
                 inventory.getItemsCount());
+        System.out.printf("Player has got %d potions\n", inventory.getPotionsCount());
         System.out.printf("Player coins: %d\n", coins);
     }
 
@@ -88,7 +89,24 @@ public class Player extends Object {
         return null;
     }
 
+    public void heal() {
+        if (inventory.getPotionsCount() > 0) {
+            changeHealthValue(10);
+            inventory.usePotion();
+            System.out.println("Player used a potion. Potions left: " +
+                    inventory.getPotionsCount());
+        } else {
+            System.out.println("No potions left to heal!");
+        }
+
+        // heal(5);
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void addPotion(Potion potion) {
+        inventory.inventoryAddPotion(potion);
     }
 }

@@ -92,36 +92,40 @@ public class Map {
         }
     }
 
-    public void checkCollisions() {
-        Inventory inventory = player.getInventory();
-        // Check collisions with monsters
+    void checkCollisions() {
+
+        // Check for collisions with monsters
         for (int i = 0; i < monsters_count; i++) {
             if (player.getX() == monsters[i].getX() && player.getY() == monsters[i].getY()) {
                 System.out.println("Player encountered a monster!");
+
                 gameplay.battleWithMonster(player, monsters[i]);
             }
         }
 
-        // Check collisions with potions
+        // Check for collisions with potions
         for (int i = 0; i < potions_count; i++) {
             if (player.getX() == potions[i].getX() && player.getY() == potions[i].getY()) {
                 System.out.println("Player found a potion!");
-                player.heal(Potion.getHealthRestore());
+                player.addPotion(potions[i]);
+                potions[i].collect();
             }
         }
 
-        // Check collisions with coins
+        // Check for collisions with coins
         for (int i = 0; i < coins_count; i++) {
             if (player.getX() == coins[i].getX() && player.getY() == coins[i].getY()) {
                 System.out.println("Player found a coin!");
+                coins[i].collectCoin(player, 5);
                 player.add_coins(5);
             }
         }
 
-        // Check collisions with weapons
+        // Check for collisions with items
         for (int i = 0; i < items_count; i++) {
             if (player.getX() == items[i].getX() && player.getY() == items[i].getY()) {
                 System.out.println("Player found a " + items[i].getName() + "!");
+
                 player.addItems(items[i]);
             }
         }
