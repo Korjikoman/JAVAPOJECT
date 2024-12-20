@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 // ------------------- GAMEPLAY FUNCTIONS --------------------------
-public class GameplayFunctions {
+public class GameplayFunctions implements GameEntity {
 
     // This code is part of a game battle system using Java.
-
+    @Override
     public void damagePlayer(Player player, int damage) {
         if (!player.isAlive()) {
             System.out.println("Monster is dead and cannot attack.");
@@ -18,7 +18,8 @@ public class GameplayFunctions {
         }
     }
 
-    public static void damageMonster(Monsters monster, int damage) {
+    @Override
+    public void damageMonster(Monsters monster, int damage) {
         monster.changeHealthValue(monster.getCurrentHealth() - damage);
         if (monster.getCurrentHealth() <= 0) {
             monster.changeHealthValue(0);
@@ -27,6 +28,7 @@ public class GameplayFunctions {
         }
     }
 
+    @Override
     public void battleWithMonster(Player player, Monsters monster) {
         if (!monster.isAlive()) {
             System.out.println("The monster is already dead.");
@@ -99,7 +101,8 @@ public class GameplayFunctions {
         System.out.println("\n");
     }
 
-    void changeSettings() {
+    @Override
+    public void changeSettings() {
         int choice;
         System.out.println("GAME SETTINGS");
         System.out.println("Select which setting you would like to change:");
