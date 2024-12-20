@@ -1,5 +1,4 @@
-public class Object {
-    private int x, y;
+public class Object extends Coordinates {
     private int health;
     private static int maxHealth = 10;
 
@@ -9,16 +8,14 @@ public class Object {
     protected String name;
 
     public Object() {
-        this.x = 0;
-        this.y = 0;
+        super(0, 0);
         this.health = 0;
         this.damage = 0;
         this.is_alive = true;
     }
 
     public Object(int x, int y, int health, int damage) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.health = health;
         this.damage = damage;
         this.is_alive = true;

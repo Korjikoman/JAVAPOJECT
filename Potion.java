@@ -1,7 +1,6 @@
 import java.util.Random;
 
-class Potion { // класс для представления зелий восстановления
-    private int x, y;
+class Potion extends Coordinates { // класс для представления зелий восстановления
     private static int healthRestore;
     private boolean collected;
     private static final Random random = new Random();
@@ -11,8 +10,7 @@ class Potion { // класс для представления зелий вос
     }
 
     public Potion(int x, int y, boolean collected) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.collected = collected;
     }
 

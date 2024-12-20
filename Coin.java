@@ -1,13 +1,11 @@
 import java.util.Random;
 
-class Coin {
-    private int x, y;
+class Coin extends Coordinates {
     private int value;
     private boolean collected;
 
     public Coin() {
-        this.x = 0;
-        this.y = 0;
+        super(0, 0);
         this.value = 5;
         this.collected = false;
     }

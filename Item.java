@@ -1,14 +1,14 @@
 import java.util.Scanner;
 
-class Item { // class for representing a weapon
+class Item extends Coordinates { // class for representing a weapon
 
     private String itemName;
-    private int x, y;
     private boolean collected;
     private int damage;
 
     // initialization
     public Item() {
+        super(0, 0);
         System.out.println("Initializing Item...");
 
         Scanner scanner = new Scanner(System.in);
