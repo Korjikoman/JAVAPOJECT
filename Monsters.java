@@ -10,12 +10,19 @@ public class Monsters extends Object {
         setDamage(5);
     }
 
-    public void printMonster() {
-        System.out.println("Monster Name: " + name);
-        System.out.printf("Monster Position: (%d, %d)\n", getX(), getY());
-        System.out.printf("Damage: %d\n", getDamage());
-        System.out.printf("Health: %d\n", getCurrentHealth());
-        System.out.printf("Is Alive: %s\n", isAlive() ? "Yes" : "No");
+    @Override
+    public String toString() {
+        return String.format(
+                "Monster Name: %s\n" +
+                        "Monster Position: (%d, %d)\n" +
+                        "Damage: %d\n" +
+                        "Health: %d\n" +
+                        "Is Alive: %s\n",
+                name,
+                getX(), getY(),
+                getDamage(),
+                getCurrentHealth(),
+                isAlive() ? "Yes" : "No");
     }
 
     public void move(int dx, int dy) {

@@ -54,30 +54,35 @@ public class Inventory { // класс для представления инв�
         return itemsCount % cols;
     }
 
-    public void printInventory() {
-        System.out.println("Inventory (in matrix form):");
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Inventory (in matrix form):\n");
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 if (inventoryItems[i][j] != null) {
-                    System.out.print(inventoryItems[i][j].getName()); // Выводим информацию о предмете
+                    sb.append(inventoryItems[i][j].getName()); // Выводим информацию о предмете
                 } else {
-                    System.out.print("[Empty]"); // Печатаем, если ячейка пустая
+                    sb.append("[Empty]"); // Печатаем, если ячейка пустая
                 }
-                System.out.print("\t");
+                sb.append("\t");
             }
-            System.out.println(); // Переход на новую строку после каждого ряда
+            sb.append("\n"); // Переход на новую строку после каждого ряда
         }
 
-        System.out.println("Potions:");
+        sb.append("Potions:\n");
         for (int i = 0; i < rows; ++i) {
             if (inventoryPotions[i] != null) {
-                System.out.print("[Potion]"); // Выводим информацию о предмете
+                sb.append("[Potion]"); // Выводим информацию о предмете
             } else {
-                System.out.print("[Empty]"); // Печатаем, если ячейка пустая
+                sb.append("[Empty]"); // Печатаем, если ячейка пустая
             }
-            System.out.print("\t");
+            sb.append("\t");
         }
-        System.out.println();
+        sb.append("\n");
+
+        return sb.toString();
     }
 
     public void inventoryAddItem(Item item) {

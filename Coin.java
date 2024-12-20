@@ -24,9 +24,10 @@ class Coin {
         return value;
     }
 
-    public void printCoin() {
-        System.out.println("Coin Position: (" + x + ", " + y + ")");
-        System.out.println("Collected: " + (isCollected() ? "Yes" : "No"));
+    @Override
+    public String toString() {
+        return String.format("Coin Position: (%d, %d)\n" +
+                "Collected: %s\n", getX(), getY(), isCollected() ? "Yes" : "No");
     }
 
     public boolean isCollected() {

@@ -40,10 +40,11 @@ class Potion { // класс для представления зелий вос
         healthRestore = value;
     }
 
-    public void printPotion() {
-        System.out.printf("Potion Position: (%d, %d)\n", x, y);
-        System.out.printf("Health Restore: %d\n", healthRestore);
-        System.out.printf("Collected: %s\n", collected ? "Yes" : "No");
+    @Override
+    public String toString() {
+        return "Potion Position: (" + x + ", " + y + ")\n" +
+                "Health Restore: " + healthRestore + "\n" +
+                "Collected: " + (collected ? "Yes" : "No") + "\n";
     }
 
     public void move(int dx, int dy) {

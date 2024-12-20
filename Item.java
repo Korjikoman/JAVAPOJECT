@@ -48,11 +48,11 @@ class Item { // class for representing a weapon
         collected = true;
     }
 
-    // output item characteristics
-    public void printItem() {
-        System.out.printf("Item Position: (%d, %d)\n", x, y);
-        System.out.printf("Item damage: %d\n", damage);
-        System.out.printf("Is item collected: %s\n", collected ? "Yes" : "No");
+    @Override
+    public String toString() {
+        return String.format("Coin Position: (%d, %d)\n" + "Item damage: %d\n" +
+                "Collected: %s\n", x, y, damage, collected ? "Yes" : "No");
+
     }
 
     public void changeX(int value) {

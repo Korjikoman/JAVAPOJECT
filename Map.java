@@ -67,28 +67,28 @@ public class Map {
 
     public void showInitializedClasses() {
         System.out.println("------------------Player:");
-        player.printPlayer();
+        System.out.println(player);
         Inventory inventory = player.getInventory();
         System.out.println("------------------Player's inventory:");
-        inventory.printInventory();
+        System.out.println(inventory);
 
         System.out.println("------------------Monsters:");
         for (int i = 0; i < monsters_count; i++) {
-            monsters[i].printMonster();
+            System.out.println(monsters[i]);
         }
 
         System.out.println("------------------Items:");
         for (int i = 0; i < items_count; i++) {
-            items[i].printItem();
+            System.out.println(items[i]);
         }
         System.out.println("------------------Potions:");
         for (int i = 0; i < potions_count; i++) {
-            potions[i].printPotion();
+            System.out.println(potions[i]);
         }
 
         System.out.println("------------------Coins:");
         for (int i = 0; i < coins_count; i++) {
-            coins[i].printCoin();
+            System.out.println(coins[i]);
         }
     }
 
