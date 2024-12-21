@@ -1,3 +1,5 @@
+import java.util.List;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,6 +16,11 @@ public class Map {
     private int monsters_count;
     private int monster_index;
     private GameplayFunctions gameplay = new GameplayFunctions();
+
+    private CollisionsChecker<Monsters> monsterChecker = new CollisionsChecker<>();
+    private CollisionsChecker<Potion> potionChecker = new CollisionsChecker<>();
+    private CollisionsChecker<Coin> coinChecker = new CollisionsChecker<>();
+    private CollisionsChecker<Item> itemChecker = new CollisionsChecker<>();
 
     private int items_count;
     private int item_index;
@@ -48,7 +55,10 @@ public class Map {
         potions = new Potion[potions_count];
         Potion prototypePotion = new Potion();
         for (int i = 0; i < potions_count; i++) {
-            potions[i] = (Potion) prototypePotion.clone();
+            potions[i] = prototypePotion;
+            potions[i].x = 1;
+            potions[i].y = 2;
+
         }
 
         coins = new Coin[coins_count];
@@ -95,43 +105,32 @@ public class Map {
         }
     }
 
-    void checkCollisions() {
+    public void checkCollisions() {
 
-        // Check for collisions with monsters
-        for (int i = 0; i < monsters_count; i++) {
-            if (player.getX() == monsters[i].getX() && player.getY() == monsters[i].getY()) {
-                System.out.println("Player encountered a monster!");
-
-                gameplay.battleWithMonster(player, monsters[i]);
-            }
-        }
+        monsterChecker.checkCollisions(player, Arrays.asList(monsters), (player, monster) -> {
+            System.out.println("Player encountered a monster!");
+            gameplay.battleWithMonster(player, monster);
+        });
 
         // Check for collisions with potions
-        for (int i = 0; i < potions_count; i++) {
-            if (player.getX() == potions[i].getX() && player.getY() == potions[i].getY()) {
-                System.out.println("Player found a potion!");
-                player.addPotion(potions[i]);
-                potions[i].collect();
-            }
-        }
+        potionChecker.checkCollisions(player, List.of(potions), (player, potion) -> {
+            System.out.println("Player found a potion!");
+            player.addPotion(potion);
+            potion.collect();
+        });
 
         // Check for collisions with coins
-        for (int i = 0; i < coins_count; i++) {
-            if (player.getX() == coins[i].getX() && player.getY() == coins[i].getY()) {
-                System.out.println("Player found a coin!");
-                coins[i].collectCoin(player, 5);
-                player.add_coins(5);
-            }
-        }
+        coinChecker.checkCollisions(player, List.of(coins), (player, coin) -> {
+            System.out.println("Player found a coin!");
+            coin.collectCoin(player, 5);
+            player.add_coins(5);
+        });
 
         // Check for collisions with items
-        for (int i = 0; i < items_count; i++) {
-            if (player.getX() == items[i].getX() && player.getY() == items[i].getY()) {
-                System.out.println("Player found a " + items[i].getName() + "!");
-
-                player.addItems(items[i]);
-            }
-        }
+        itemChecker.checkCollisions(player, List.of(items), (player, item) -> {
+            System.out.println("Player found a " + item.getName() + "!");
+            player.addItems(item);
+        });
     }
 
     public void moveObjectsRandomly() {
