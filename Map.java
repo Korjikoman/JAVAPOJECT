@@ -24,7 +24,7 @@ public class Map {
     private static final int coins_count = 7;
     private int coin_index;
 
-    public Map() {
+    public Map() throws CloneNotSupportedException {
         System.out.print("How many monsters do you want");
         monsters_count = InputHandler.safeInt(1, 10);
 
@@ -44,10 +44,13 @@ public class Map {
         for (int i = 0; i < items_count; i++) {
             items[i] = new Item();
         }
+
         potions = new Potion[potions_count];
+        Potion prototypePotion = new Potion();
         for (int i = 0; i < potions_count; i++) {
-            potions[i] = new Potion();
+            potions[i] = (Potion) prototypePotion.clone();
         }
+
         coins = new Coin[coins_count];
         for (int i = 0; i < coins_count; i++) {
             coins[i] = new Coin();

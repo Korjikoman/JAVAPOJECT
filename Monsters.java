@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Monsters extends Object {
+public class Monsters extends Objects {
     private static String[] names = { "Bob", "Dill", "Frank", "Sugarboy" };
 
     public Monsters() {

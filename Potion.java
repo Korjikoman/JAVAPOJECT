@@ -1,6 +1,6 @@
 import java.util.Random;
 
-class Potion extends Coordinates { // класс для представления зелий восстановления
+class Potion extends Coordinates implements Cloneable { // класс для представления зелий восстановления
     private static int healthRestore;
     private boolean collected;
     private static final Random random = new Random();
@@ -43,6 +43,11 @@ class Potion extends Coordinates { // класс для представлени
         return "Potion Position: (" + x + ", " + y + ")\n" +
                 "Health Restore: " + healthRestore + "\n" +
                 "Collected: " + (collected ? "Yes" : "No") + "\n";
+    }
+
+    @Override
+    public Potion clone() throws CloneNotSupportedException {
+        return (Potion) super.clone();
     }
 
     public void move(int dx, int dy) {

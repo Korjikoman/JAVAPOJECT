@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Player extends Object {
+public class Player extends Objects {
     private int speed;
     private Inventory inventory = new Inventory();
     private int potions_count;

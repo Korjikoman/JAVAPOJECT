@@ -117,8 +117,8 @@ public class GameplayFunctions implements GameEntity {
                 int health;
                 System.out.println("Enter new health value:");
                 health = Integer.parseInt(System.console().readLine());
-                Object.setMaxHealth(health);
-                System.out.println("The player's new max health value is: " + Object.getMaxHealth());
+                Objects.setMaxHealth(health);
+                System.out.println("The player's new max health value is: " + Objects.getMaxHealth());
                 break;
             case 2:
                 int space;
