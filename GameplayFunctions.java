@@ -108,7 +108,7 @@ public class GameplayFunctions implements GameEntity {
         System.out.println("Select which setting you would like to change:");
         System.out.println("1) Player's maximum health");
         System.out.println("2) Maximum inventory space");
-        System.out.println("3) Amount of health restored by potions");
+
         choice = Integer.parseInt(System.console().readLine());
         switch (choice) {
 
@@ -127,13 +127,7 @@ public class GameplayFunctions implements GameEntity {
                 Inventory.changeSpace(space);
                 System.out.println("The new max inventory space value is: " + Inventory.getSpace());
                 break;
-            case 3:
-                int restore;
-                System.out.println("Enter new restored health value:");
-                restore = Integer.parseInt(System.console().readLine());
-                Potion.setHealthRestore(restore);
-                System.out.println("The new value of the player's maximum health:" + Potion.getHealthRestore());
-                break;
+
             default:
                 break;
         }

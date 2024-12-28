@@ -90,6 +90,7 @@ public class Inventory {
                 if (row.get(i) == null) {
                     row.set(i, item);
                     itemsCount++;
+                    Sorting.sortItems(inventoryItems);
                     System.out.println("Item added");
                     return;
                 }
@@ -110,6 +111,8 @@ public class Inventory {
             if (inventoryPotions.get(i) == null) {
                 inventoryPotions.set(i, potion);
                 potionsCount++;
+                Sorting.sortPotions(inventoryPotions);
+
                 System.out.println("Potion added");
                 return;
             }
@@ -127,6 +130,7 @@ public class Inventory {
         // Используем последнее зелье
         inventoryPotions.set(potionsCount - 1, null);
         potionsCount--;
+        Sorting.sortPotions(inventoryPotions);
         System.out.println("Potion used! Potions left: " + potionsCount);
     }
 
@@ -155,7 +159,7 @@ public class Inventory {
         sb.append("Potions:\n");
         for (Potion potion : inventoryPotions) {
             if (potion != null) {
-                sb.append("[Potion] ");
+                sb.append("[Potion_" + potion.getHealthRestore() + "] ");
             } else {
                 sb.append("[Empty] ");
             }

@@ -16,7 +16,7 @@ public class Map {
     private int monsters_count;
     private int monster_index;
     private GameplayFunctions gameplay = new GameplayFunctions();
-
+    private Random random = new Random();
     private CollisionsChecker<Monsters> monsterChecker = new CollisionsChecker<>();
     private CollisionsChecker<Potion> potionChecker = new CollisionsChecker<>();
     private CollisionsChecker<Coin> coinChecker = new CollisionsChecker<>();
@@ -53,12 +53,8 @@ public class Map {
         }
 
         potions = new Potion[potions_count];
-        Potion prototypePotion = new Potion();
         for (int i = 0; i < potions_count; i++) {
-            potions[i] = prototypePotion;
-            potions[i].x = 1;
-            potions[i].y = 2;
-
+            potions[i] = new Potion();
         }
 
         coins = new Coin[coins_count];

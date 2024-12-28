@@ -1,17 +1,21 @@
 import java.util.Random;
 
 class Potion extends Coordinates implements Cloneable { // класс для представления зелий восстановления
-    private static int healthRestore;
+    private int healthRestore;
     private boolean collected;
     private static final Random random = new Random();
 
     public Potion() {
         this(0, 0, false);
+
+        healthRestore = random.nextInt(20) + 1;
     }
 
     public Potion(int x, int y, boolean collected) {
         super(x, y);
         this.collected = collected;
+
+        healthRestore = random.nextInt(20) + 1;
     }
 
     public boolean isCollected() {
@@ -30,11 +34,11 @@ class Potion extends Coordinates implements Cloneable { // класс для п�
         return y;
     }
 
-    public static int getHealthRestore() {
+    public int getHealthRestore() {
         return healthRestore;
     }
 
-    public static void setHealthRestore(int value) {
+    public void setHealthRestore(int value) {
         healthRestore = value;
     }
 
@@ -70,7 +74,4 @@ class Potion extends Coordinates implements Cloneable { // класс для п�
         y = value;
     }
 
-    static {
-        healthRestore = 4;
-    }
 }
