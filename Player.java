@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Player extends Objects {
@@ -91,16 +92,25 @@ public class Player extends Objects {
     }
 
     public Item getItem(String itemName) {
-        Item[][] items = inventory.getInventoryItems();
-        for (int i = 0; i < Inventory.getSpace(); i++) {
-            for (int j = 0; j < Inventory.getSpace(); j++) {
-                System.out.println("Item [" + (i + 1) + ";" + (j + 1) + "]" + items[i][j].getName() + ", Damage: "
-                        + items[i][j].getDamage());
-                if (items[i][j].getName().contains(itemName))
-                    return items[i][j];
+        // Получаем список предметов из инвентаря
+        List<List<Item>> items = inventory.getInventoryItems();
+
+        // Перебираем все строки и слоты в инвентаре
+        for (List<Item> row : items) {
+            for (Item slot : row) {
+                if (slot != null) {
+                    // Выводим информацию о предмете
+                    System.out.println("Item: " + slot.getName() + ", Damage: " + slot.getDamage());
+
+                    // Проверяем, содержит ли имя предмета искомую строку
+                    if (slot.getName().contains(itemName)) {
+                        return slot; // Возвращаем найденный предмет
+                    }
+                }
             }
         }
-        return null;
+
+        return null; // Если предмет не найден, возвращаем null
     }
 
     public void heal() {

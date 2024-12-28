@@ -1,33 +1,35 @@
-public class Inventory { // класс для представления инвентаря игрока
+import java.util.ArrayList;
+import java.util.List;
+
+public class Inventory {
     private static int space = 4;
     private int itemsCount;
     private int potionsCount;
     private int currentElement;
-    private Item[][] inventoryItems;
-    private Potion[] inventoryPotions;
-    private int cols;
-    private int rows;
+
+    private List<List<Item>> inventoryItems; // 2D список для предметов
+    private List<Potion> inventoryPotions; // Список для зелий
 
     public Inventory() {
         System.out.println("Initializing Inventory...");
-
-        inventoryItems = new Item[space][space];
-        cols = rows = space / 2;
-        for (int i = 0; i < space; ++i) {
-            for (int j = 0; j < space; ++j) {
-                inventoryItems[i][j] = null; // Изначально все ячейки пустые (null)
-            }
-        }
-
-        inventoryPotions = new Potion[space];
-
-        for (int i = 0; i < space; ++i) {
-            inventoryPotions[i] = null; // Изначально все ячейки пустые (null)
-        }
-
         itemsCount = 0;
-        currentElement = 0;
         potionsCount = 0;
+        currentElement = 0;
+
+        // Размер инвентаря
+        inventoryItems = new ArrayList<>();
+        for (int i = 0; i < space / 2; i++) {
+            List<Item> row = new ArrayList<>();
+            for (int j = 0; j < space / 2; j++) {
+                row.add(null);
+            }
+            inventoryItems.add(row);
+        }
+
+        inventoryPotions = new ArrayList<>();
+        for (int i = 0; i < space; i++) {
+            inventoryPotions.add(null);
+        }
     }
 
     public static int getSpace() {
@@ -47,77 +49,73 @@ public class Inventory { // класс для представления инв�
     }
 
     public int getRow() {
-        return itemsCount / cols;
+        return itemsCount / (space / 2);
     }
 
     public int getCol() {
-        return itemsCount % cols;
+        return itemsCount % (space / 2);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
+    public List<List<Item>> getInventoryItems() {
+        return inventoryItems;
+    }
 
-        sb.append("Inventory (in matrix form):\n");
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if (inventoryItems[i][j] != null) {
-                    sb.append(inventoryItems[i][j].getName()); // Выводим информацию о предмете
-                } else {
-                    sb.append("[Empty]"); // Печатаем, если ячейка пустая
-                }
-                sb.append("\t");
+    public void clearInventory() {
+        // Очищаем все предметы в инвентаре
+        for (List<Item> row : inventoryItems) {
+            for (int i = 0; i < row.size(); i++) {
+                row.set(i, null);
             }
-            sb.append("\n"); // Переход на новую строку после каждого ряда
         }
 
-        sb.append("Potions:\n");
-        for (int i = 0; i < rows; ++i) {
-            if (inventoryPotions[i] != null) {
-                sb.append("[Potion]"); // Выводим информацию о предмете
-            } else {
-                sb.append("[Empty]"); // Печатаем, если ячейка пустая
-            }
-            sb.append("\t");
+        // Очищаем все зелья
+        for (int i = 0; i < inventoryPotions.size(); i++) {
+            inventoryPotions.set(i, null);
         }
-        sb.append("\n");
 
-        return sb.toString();
+        // Сбрасываем счетчики
+        itemsCount = 0;
+        potionsCount = 0;
     }
 
     public void inventoryAddItem(Item item) {
-        if (itemsCount >= rows * cols) {
+        if (itemsCount >= space) {
             System.out.println("Inventory is full!");
-            return; // Предотвращаем добавление
-        }
-
-        int row = getRow();
-        int col = getCol();
-
-        if (inventoryItems[row][col] != null) {
-            System.out.println("Error: Slot (" + row + ", " + col + ") is already occupied.");
             return;
         }
 
-        inventoryItems[row][col] = item; // Помещаем предмет
-        itemsCount++;
-        System.out.println("Item added to slot (" + row + ", " + col + ")");
+        // Ищем свободное место
+        for (List<Item> row : inventoryItems) {
+            for (int i = 0; i < row.size(); i++) {
+                if (row.get(i) == null) {
+                    row.set(i, item);
+                    itemsCount++;
+                    System.out.println("Item added");
+                    return;
+                }
+            }
+        }
+
+        System.out.println("No space left to add item");
     }
 
     public void inventoryAddPotion(Potion potion) {
         if (potionsCount >= space) {
-            System.out.println("Inventory is full!");
-            return; // Предотвращаем добавление
-        }
-
-        if (inventoryPotions[potionsCount] != null) {
-            System.out.println("Error: Slot (" + potionsCount + ") is already occupied.");
+            System.out.println("No space left for potions");
             return;
         }
 
-        inventoryPotions[potionsCount] = potion; // Помещаем предмет
-        potionsCount++;
-        System.out.println("Potion added to slot (" + potionsCount + ")");
+        // Добавляем в первый свободный слот
+        for (int i = 0; i < inventoryPotions.size(); i++) {
+            if (inventoryPotions.get(i) == null) {
+                inventoryPotions.set(i, potion);
+                potionsCount++;
+                System.out.println("Potion added");
+                return;
+            }
+        }
+
+        System.out.println("No space left for potions");
     }
 
     public void usePotion() {
@@ -126,11 +124,8 @@ public class Inventory { // класс для представления инв�
             return;
         }
 
-        inventoryPotions[potionsCount - 1].changeX(-1);
-        inventoryPotions[potionsCount - 1].changeY(-1);
-
-        inventoryPotions[potionsCount - 1] = null;
-
+        // Используем последнее зелье
+        inventoryPotions.set(potionsCount - 1, null);
         potionsCount--;
         System.out.println("Potion used! Potions left: " + potionsCount);
     }
@@ -139,11 +134,34 @@ public class Inventory { // класс для представления инв�
         return potionsCount;
     }
 
-    public Item[][] getInventoryItems() {
-        return inventoryItems;
-    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Inventory (in matrix form):\n");
 
-    public Potion[] getPotions() {
-        return inventoryPotions;
+        // Выводим предметы в инвентаре
+        for (List<Item> row : inventoryItems) {
+            for (Item item : row) {
+                if (item != null) {
+                    sb.append(item.getName()).append(" ");
+                } else {
+                    sb.append("[Empty] ");
+                }
+            }
+            sb.append("\n");
+        }
+
+        // Выводим зелия
+        sb.append("Potions:\n");
+        for (Potion potion : inventoryPotions) {
+            if (potion != null) {
+                sb.append("[Potion] ");
+            } else {
+                sb.append("[Empty] ");
+            }
+        }
+        sb.append("\n");
+
+        return sb.toString();
     }
 }
